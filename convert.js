@@ -144,12 +144,12 @@ function getCase8TenThousandWords(n, pattern) {
 function getWords(digits, num) {
   let result = "";
   let numStr = num.toString();
-  
+
   if (digits === 1) {
     // e.g. 6, range: {0 - 9}
     result += getOnesWords(numStr);
   } else if (digits === 2 && num < 100) {
-    
+
     if (num < 20) {
       // e.g. 17, range: {10 - 19}
       result += getUniqueTensWords(numStr);
@@ -157,9 +157,9 @@ function getWords(digits, num) {
       // e.g. 67, range: {20 - 99}
       result += getTensWords(numStr);
     }
-    
+
   } else if (digits === 3 && num < 1000) {
-  
+
     let lastTwo = parseInt(numStr.slice(1));
     if (lastTwo < 20) {
       // e.g. 114, range: {100 - 119}, {200 - 219},... {900 - 919}
@@ -168,9 +168,9 @@ function getWords(digits, num) {
       // e.g. 374, range: {120 - 199}, {220 - 299},... {920 - 999}
       result += getHundredsWords(numStr);
     }
-    
+
   } else if (digits === 4 && num < 10000) {
-    
+
     let lastTwo = parseInt(numStr.slice(2));
     let lastThree = parseInt(numStr.slice(1));
     if (lastThree < 20) {
@@ -181,14 +181,14 @@ function getWords(digits, num) {
       result += getCase2ThousandWords(numStr);
     } else if (lastTwo < 20) {
       // e.g. 3,718, range: {1,100 - 1,119}, {1,200 - 1,219}, {2,100 - 2,119},... {9,100 - 9,119},...
-      result += getCase3ThousandWords(numStr, lastTwo); 
+      result += getCase3ThousandWords(numStr, lastTwo);
     } else {
       // e.g. 7,482, range: {1,120 - 1,199}, {1,220 - 1,299}, {2,120 - 2,199},... {9,120 - 9,199},...
-      result += getCase4ThousandWords(numStr); 
+      result += getCase4ThousandWords(numStr);
     }
-    
-  } else if(digits === 5 && num < 100000) {
-    
+
+  } else if (digits === 5 && num < 100000) {
+
     // pattern for extra space
     let pattern = /\s+/g;
 
@@ -220,7 +220,7 @@ function getWords(digits, num) {
       // e.g. 52,645, range: {20,120 - 20,199},... {21,420 - 21,499},... {99,520 - 99,599},... {99,920 - 99,999}
       result += getCase8TenThousandWords(numStr, pattern);
     }
-            
+
   }
   return result;
 }
@@ -228,37 +228,93 @@ function getWords(digits, num) {
 // Convert number to words
 
 function numberToWords() {
-  let number = parseInt(document.getElementById("number").value);
+  let number = document.getElementById("number").value;
+  let checkNumber = /^\d+$/;
 
-  function getDigits(num) {
-    return num.toString().length;
+  let words = document.getElementById("words");
+  let validateNumber = document.getElementById("validate-number");
+  words.textContent = "";
+  validateNumber.textContent = "";
+
+  if (checkNumber.test(number) === false ||
+    parseInt(number) <= 0 || parseInt(number) >= 100000) {
+    validateNumber.classList.add("text-danger");
+    if (parseInt(number) <= 0) {
+      validateNumber.textContent = "* Please enter a natural number";
+    } else if(parseInt(number) >= 100000) {
+      validateNumber.textContent = "* Please enter a number less than 1 lakh";
+    } else {
+      validateNumber.textContent = "* Please enter a number";
+    }
+  } else {
+    function getDigits(num) {
+      return num.toString().length;
+    }
+
+    number = parseInt(number);
+    let digits = getDigits(number);
+
+    let my_words = getWords(digits, number);
+    words.className = "";
+    words.textContent = `${my_words}`;
   }
-
-  let digits = getDigits(number);
-
-  let my_words = getWords(digits, number);
-  let element = document.getElementById("words");
-  element.textContent = `${my_words}`;
 }
 
 // Convert a range of numbers to words
 
 function numbersToWords() {
-  let number1 = parseInt(document.getElementById("number1").value);
-  let number2 = parseInt(document.getElementById("number2").value);
+  let number1 = document.getElementById("number1").value;
+  let number2 = document.getElementById("number2").value;
+  let checkNumber = /^\d+$/;
 
-  document.getElementById("rangeOfWords").textContent = "";
-  for (let i = number1; i <= number2; i++) {
-    function getDigits(num) {
-      return num.toString().length;
+  let rangeOfWords = document.getElementById("rangeOfWords");
+  let validateNumber1 = document.getElementById("validate-number1");
+  let validateNumber2 = document.getElementById("validate-number2");
+  rangeOfWords.textContent = "";
+  validateNumber1.textContent = "";
+  validateNumber2.textContent = "";
+
+  if (checkNumber.test(number1) === false ||
+    parseInt(number1) <= 0 || parseInt(number1) >= 100000) {
+    validateNumber1.classList.add("text-danger");
+    if (parseInt(number1) <= 0) {
+      validateNumber1.textContent = "* Please enter a natural number";
+    } else if(parseInt(number1) >= 100000) {
+      validateNumber1.textContent = "* Please enter a number less than 1 lakh";
+    } else {
+      validateNumber1.textContent = "* Please enter a number";
     }
-    
-    let digits = getDigits(i);
+  } else if (checkNumber.test(number2) === false ||
+    parseInt(number2) <= 0 || parseInt(number2) >= 100000) {
+    validateNumber2.classList.add("text-danger");
+    if (parseInt(number2) <= 0) {
+      validateNumber2.textContent = "* Please enter a natural number";
+    } else if(parseInt(number2) >= 100000) {
+      validateNumber2.textContent = "* Please enter a number less than 1 lakh";
+    } else {
+      validateNumber2.textContent = "* Please enter a number";
+    }
+  } else {
+    number1 = parseInt(number1);
+    number2 = parseInt(number2);
 
-    let my_words = getWords(digits, i);
-    let element = document.getElementById("rangeOfWords");
-    let divElement = document.createElement("div");
-    divElement.textContent = `${i}: ${my_words}`;
-    element.append(divElement);
+    if (number1 > number2) {
+      let temp = number1;
+      number1 = number2;
+      number2 = temp;
+    }
+
+    for (let i = number1; i <= number2; i++) {
+      function getDigits(num) {
+        return num.toString().length;
+      }
+
+      let digits = getDigits(i);
+
+      let my_words = getWords(digits, i);
+      let divElement = document.createElement("div");
+      divElement.textContent = `${i}: ${my_words}`;
+      rangeOfWords.append(divElement);
+    }
   }
 }

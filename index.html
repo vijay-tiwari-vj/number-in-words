@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
   <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -44,26 +44,29 @@
   <main>
     <div class="container content" style="margin-bottom: 3rem;">
       <h4 class="text-center" style="margin-bottom: 1rem;">Single Number</h4>
-      <div class="row d-flex align-items-center">
-        <div class="col-md-8">
+      <div class="row d-flex align-items-baseline">
+        <div class="col-md-10 d-flex flex-column">
           <input type="text" class="form-control" id="number" placeholder="Enter a number">
+          <span id="validate-number" style="padding: 0.5rem 0;"></span>
         </div>
         <div class="col-md-2 d-flex justify-content-center">
           <button style="margin: 1rem 0;" type="button" class="btn btn-primary" onclick="numberToWords();">Convert</button>
         </div>
       </div>
 
-      <span id="words" class=""></span>
+      <span id="words"></span>
     </div>
 
     <div class="container content" style="margin-bottom: 3rem;">
       <h4 class="text-center" style="margin-bottom: 1rem;">Range of Numbers</h4>
-      <div class="row d-flex align-items-center">
-        <div class="col-md-4" style="margin: 1rem 0;">
+      <div class="row d-flex align-items-baseline">
+        <div class="col-md-5 d-flex flex-column" style="margin: 1rem 0;">
           <input type="text" class="form-control" id="number1" placeholder="Enter lower range">
+          <span id="validate-number1" style="padding: 0.5rem 0;"></span>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5 d-flex flex-column">
           <input type="text" class="form-control" id="number2" placeholder="Enter upper range">
+          <span id="validate-number2" style="padding: 0.5rem 0;"></span>
         </div>
         <div class="col-md-2 d-flex justify-content-center">
           <button style="margin: 1rem 0;" type="button" class="btn btn-primary" onclick="numbersToWords();">Convert</button>
